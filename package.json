@@ -4,7 +4,11 @@
   "description": "Convert higher color space to srgb on cmd+c and update it in the clipboard.",
   "main": "./app/dist/esm/clipboardColorspaceConversion.mjs",
   "types": "./app/dist/esm/clipboardColorspaceConversion.d.ts",
-  "bin": "./app/dist/cjs/cli/clipboardColorspaceConversion-cli.js",
+  "bin": {
+    "clipboardColorspaceConversion": "./app/dist/cjs/cli/clipboardColorspaceConversion-cli.js",
+    "clipColorConv": "./app/dist/cjs/cli/clipboardColorspaceConversion-cli.js",
+    "ccc": "./app/dist/cjs/cli/clipboardColorspaceConversion-cli.js"
+  },
   "exports": {
     "node": {
       "import": "./app/dist/esm/clipboardColorspaceConversion.mjs",
