@@ -1,7 +1,7 @@
 import notifier from 'node-notifier';
 import clipboard from 'clipboardy';
 import {GlobalKeyboardListener} from "node-global-key-listener";
-import convert from './colorConv';
+import convert from './clipboardColorspaceConversion';
 import LinkedList from "fast-linked-list"
 
 function log(...a) {

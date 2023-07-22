@@ -1,4 +1,4 @@
-import convert from './colorConv';
+import convert from './clipboardColorspaceConversion';
 import clipboard from 'clipboardy';
 
 export default function parse(args: string, colorSpace?: string) {
