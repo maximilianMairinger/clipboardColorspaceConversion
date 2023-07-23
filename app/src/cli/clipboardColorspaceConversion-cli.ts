@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import watch from "../watch"
 import once from "../once"
 import { program } from "commander"
