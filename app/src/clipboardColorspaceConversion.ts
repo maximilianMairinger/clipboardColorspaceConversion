@@ -3,7 +3,7 @@ import hexRgb from 'hex-rgb';
 
 
 type W = Color.Space
-const rgbRegex = /^((#?((([a-f0-9]{2}){3,4})|([a-f0-9]{3,4})))|((((rgba?)|color)\()?(((0?(\.\d+))( |, ?)((0?(\.\d+))|1)( |, ?)((0?(\.\d+))|1)(( |, ?)((0?(\.\d+))|1))?)|((\d\d?\d?)( |, ?)(\d\d?\d?)( |, ?)(\d\d?\d?)((( |, ?)((0?(\.\d+))|1)))?)))\)?)$/gi
+const rgbRegex = /^((#?((([a-f0-9]{2}){3,4})|([a-f0-9]{3,4})))|((rgba?\()?(((0|1|(0?(\.\d+)))( |, ?)(0|1|(0?(\.\d+)))( |, ?)(0|1|(0?(\.\d+)))(( |, ?)(0?(\.\d+)))?)|((\d\d?\d?)( |, ?)(\d\d?\d?)( |, ?)(\d\d?\d?)((( |, ?)(0?(\.\d+))))?)))\)?)$/i
 
 
 export default function(ogStr, attrb = "background: ", fromColorSpace = "p3") {
@@ -21,7 +21,7 @@ export default function(ogStr, attrb = "background: ", fromColorSpace = "p3") {
 
   if (isHex) is255Base = true
   else {
-    const matches = !!str.match(rgbRegex)
+    const matches = rgbRegex.test(str)
     if (!matches) throw new Error("Invalid color string")
 
     let q = str.split("(")
