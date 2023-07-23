@@ -3,6 +3,7 @@ import clipboard from 'clipboardy';
 import {GlobalKeyboardListener} from "node-global-key-listener";
 import convert from './clipboardColorspaceConversion';
 import LinkedList from "fast-linked-list"
+import delay from "tiny-delay"
 
 function log(...a) {
   const time = new Date().toLocaleTimeString()
@@ -35,18 +36,14 @@ export function watch(fromColorSpace?: string) {
 
   const listener = new LinkedList<(clipboardText: string) => void>()
 
-
-
   const v = new GlobalKeyboardListener();
   v.addListener(function (e, down) {
     if (e.state == "DOWN" && e.name == "C" && (down["LEFT META"] || down["RIGHT META"])) {
-      clipboard.read().then((txt) => {
+      delay(10).then(() => clipboard.read()).then((txt) => {
         for (const f of listener) {
           f(txt)
         }
       })
-      
-      return true;
     }
   });
 
@@ -54,11 +51,10 @@ export function watch(fromColorSpace?: string) {
 
 
   listener.push(async (clipboardText) => {
-    console.log("Clipboard updated", clipboardText)
     try {
       const result = convert(clipboardText, undefined, fromColorSpace)
 
-      console.log(`Converted "${clipboardText}" to "${result}"`)
+      log(`Converted "${clipboardText}" to:\n---\n${result}\n---`)
 
       try {
         clipboard.writeSync(result)
@@ -76,7 +72,7 @@ export function watch(fromColorSpace?: string) {
             }
             catch(e) {
               error("Failed to undo")
-              console.log("Old clipboard content:\n---\n" + clipboardText + "\n---")
+              log("Old clipboard content:\n---\n" + clipboardText + "\n---")
               
               try {
                 await notify({
@@ -99,7 +95,7 @@ export function watch(fromColorSpace?: string) {
       }
     }
     catch(e) {
-      // console.log("Failed to convert", e)
+      // error("Failed to convert", e)
     }
   })
 

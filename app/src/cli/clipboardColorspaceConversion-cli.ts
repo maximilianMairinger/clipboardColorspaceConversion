@@ -22,7 +22,6 @@ program
       console.log("Listening for clipboard changes...")
     }
     
-    
   })
 
 .parse(process.argv)
